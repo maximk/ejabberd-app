@@ -37,11 +37,7 @@
 
 -include("ejabberd.hrl").
 
--ifdef(SSL40).
 -define(PG2, pg2).
--else.
--define(PG2, pg2_backport).
--endif.
 
 %%====================================================================
 %% API

@@ -143,7 +143,6 @@
              p1_fsm,
              p1_mnesia,
              p1_prof,
-             pg2_backport,
              pubsub_db_odbc,
              pubsub_index,
              pubsub_subscription,
