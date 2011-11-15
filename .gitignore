@@ -2,20 +2,6 @@
 # You can add personal rules in your file .git/info/exclude
 *.swp
 *~
-contrib/extract_translations/extract_translations.beam
-doc/*.aux
-doc/*.haux
-doc/*.html
-doc/*.htoc
-doc/*.idx
-doc/*.ilg
-doc/*.ind
-doc/*.log
-doc/*.out
-doc/*.pdf
-doc/*.toc
-doc/contributed_modules.tex
-doc/version.tex
 src/*.beam
 src/*.so
 src/*.so.dSYM
@@ -43,15 +29,5 @@ erl_crash.dump
 ELDAPv3.asn1db
 ELDAPv3.erl
 ELDAPv3.hrl
-apps/ejabberd/priv/lib/
+priv/lib/
 *.asn1db
-apps/ejabberd/src/XmppAddr.erl
-apps/ejabberd/src/XmppAddr.hrl
-apps/ejabberd/src/aclocal.m4
-apps/ejabberd/src/config.log
-apps/ejabberd/src/ejabberd.init
-apps/ejabberd/src/ejabberdctl.example
-apps/ejabberd/src/eldap_filter_yecc.erl
-rel/ejabberd/
-apps/stringprep/ebin
-apps/stringprep/priv
