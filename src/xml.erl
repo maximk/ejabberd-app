@@ -51,21 +51,12 @@
 -define(ESCAPE_BINARY(CData), crypt(CData)).
 -endif.
 
-%% Replace element_to_binary/1 with NIF
-%% Can be choosen with ./configure --enable-nif
--ifdef(NIF).
-start() ->
-    SOPath = filename:join(ejabberd:get_so_path(), "xml"),
-    case catch erlang:load_nif(SOPath, 0) of
-	ok ->
-	    ok;
-	Err ->
-	    ?WARNING_MSG("unable to load xml NIF: ~p", [Err])
-    end.
--else.
+%%MK
+%%
+%% element_to_binary/1 NIF removed
+%%
 start() ->
     ok.
--endif.
 
 element_to_binary(El) ->
     iolist_to_binary(element_to_string(El)).

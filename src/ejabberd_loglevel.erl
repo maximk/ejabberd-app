@@ -31,6 +31,9 @@
 -module(ejabberd_loglevel).
 -author('mickael.remond@process-one.net').
 
+%%MK
+-compile(export_all).
+
 -export([set/1,
 	 get/0,
 	 set_custom/2,
@@ -80,16 +83,25 @@ get() ->
 %% @doc Set the default and all custom levels
 set(DefaultLevel) when is_atom(DefaultLevel) orelse is_integer(DefaultLevel) ->
     set({DefaultLevel, []});
-set({DefaultLevel, CustomLevels}) when is_list(CustomLevels) ->
-    DefaultInt = level_to_integer(DefaultLevel),
-    CustomInts = [level_to_integer(C) || C <- CustomLevels],
-    Loglevel = {DefaultInt, CustomInts},
-    try
-        {Mod,Code} = dynamic_compile:from_string(ejabberd_logger_src(Loglevel)),
-        code:load_binary(Mod, ?LOGMODULE ++ ".erl", Code)
-    catch
-        Type:Error -> ?CRITICAL_MSG("Error compiling logger (~p): ~p~n", [Type, Error])
-    end;
+
+set({4,[]}) ->
+
+	%% The module is generated statically for this particular log level.
+	%%
+
+	{module,ejabberd_logger};
+
+%%set({DefaultLevel, CustomLevels}) when is_list(CustomLevels) ->
+%%    DefaultInt = level_to_integer(DefaultLevel),
+%%    CustomInts = [level_to_integer(C) || C <- CustomLevels],
+%%    Loglevel = {DefaultInt, CustomInts},
+%%    try
+%%        {Mod,Code} = dynamic_compile:from_string(ejabberd_logger_src(Loglevel)),
+%%        code:load_binary(Mod, ?LOGMODULE ++ ".erl", Code)
+%%    catch
+%%        Type:Error -> ?CRITICAL_MSG("Error compiling logger (~p): ~p~n", [Type, Error])
+%%    end;
+
 set(_) ->
     exit("Invalid loglevel format").
 

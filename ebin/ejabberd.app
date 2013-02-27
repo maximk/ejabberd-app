@@ -39,6 +39,7 @@
              ejabberd_local,
              ejabberd_logger_h,
              ejabberd_loglevel,
+			 ejabberd_logger, %%MK
              ejabberd_node_groups,
              ejabberd_odbc,
              ejabberd_odbc_sup,

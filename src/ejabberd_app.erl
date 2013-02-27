@@ -48,7 +48,11 @@ start(normal, _Args) ->
 %%    LogPath = get_log_path(),
 %%    error_logger:add_report_handler(ejabberd_logger_h, LogPath),
 
-    load_drivers([tls_drv, expat_erl]),
+%%MK
+%%
+%% load_drivers([tls_drv, expat_erl]),
+	io:format("//// drivers not loaded: tls_drv expat_erl~n", []),
+
     translate:start(),
     acl:start(),
     ejabberd_ctl:init(),
@@ -58,8 +62,14 @@ start(normal, _Args) ->
     ejabberd_config:start(),
     ejabberd_check:config(),
     connect_nodes(),
-    %% Loading ASN.1 driver explicitly to avoid races in LDAP
-    catch asn1rt:load_driver(),
+
+%%MK
+%%
+%% asn1rt:load_driver produces a deprecated message
+%%
+%%    %% Loading ASN.1 driver explicitly to avoid races in LDAP
+%%    catch asn1rt:load_driver(),
+
     {ok, _} = Sup = ejabberd_sup:start_link(),
     ejabberd_rdbms:start(),
     ejabberd_auth:start(),
@@ -218,17 +228,17 @@ delete_pid_file() ->
             file:delete(PidFilename)
     end.
 
--spec load_drivers(list(atom())) -> ok.
-load_drivers([]) ->
-    ok;
-load_drivers([Driver | Rest]) ->
-    case erl_ddll:load_driver(ejabberd:get_so_path(), Driver) of
-        ok ->
-            load_drivers(Rest);
-        {error, already_loaded} ->
-            load_drivers(Rest);
-        {error, Reason} ->
-            ?CRITICAL_MSG("unable to load driver 'expat_erl': ~s",
-                          [erl_ddll:format_error(Reason)]),
-            exit({driver_loading_failed, Driver, Reason})
-    end.
+%%-spec load_drivers(list(atom())) -> ok.
+%%load_drivers([]) ->
+%%    ok;
+%%load_drivers([Driver | Rest]) ->
+%%    case erl_ddll:load_driver(ejabberd:get_so_path(), Driver) of
+%%        ok ->
+%%            load_drivers(Rest);
+%%        {error, already_loaded} ->
+%%            load_drivers(Rest);
+%%        {error, Reason} ->
+%%            ?CRITICAL_MSG("unable to load driver 'expat_erl': ~s",
+%%                          [erl_ddll:format_error(Reason)]),
+%%            exit({driver_loading_failed, Driver, Reason})
+%%    end.
